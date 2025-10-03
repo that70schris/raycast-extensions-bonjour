@@ -1,10 +1,10 @@
-import { Action, ActionPanel, Icon, List, open } from "@raycast/api";
-import { useCachedState } from "@raycast/utils";
-import { cache, HttpService, KEY } from "./service";
+import { Action, ActionPanel, Icon, List, open } from '@raycast/api';
+import { useCachedState } from '@raycast/utils';
+import { cache, HttpService, KEY } from './service';
 
 HttpService.fetch();
 export default function Command() {
-  const [items, setItems] = useCachedState<HttpService[]>(KEY);
+  const [ items, setItems ] = useCachedState<HttpService[]>(KEY);
 
   const set = () => {
     setItems(HttpService.services);
@@ -24,9 +24,9 @@ export default function Command() {
               source: Icon.CircleFilled,
               tintColor: service.host.status,
             }}
-            detail={
+            detail={(
               <List.Item.Detail
-                metadata={
+                metadata={(
                   <List.Item.Detail.Metadata>
                     <List.Item.Detail.Metadata.Link
                       title="Location"
@@ -60,10 +60,10 @@ export default function Command() {
                       text={service.referer?.address}
                     />
                   </List.Item.Detail.Metadata>
-                }
+                )}
               />
-            }
-            actions={
+            )}
+            actions={(
               <ActionPanel>
                 <Action.OpenInBrowser url={service.origin} />
                 <Action.CopyToClipboard
@@ -71,7 +71,7 @@ export default function Command() {
                   content={service.origin}
                 />
               </ActionPanel>
-            }
+            )}
           />
         );
       })}

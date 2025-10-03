@@ -1,20 +1,20 @@
-import { Cache, Color } from "@raycast/api";
-import Bonjour, { Service } from "bonjour-service";
-import { execSync } from "child_process";
+import { Cache, Color } from '@raycast/api';
+import Bonjour, { Service } from 'bonjour-service';
+import { execSync } from 'child_process';
 
-export const KEY = "services";
+export const KEY = 'services';
 export const cache = new Cache();
 
 declare global {
   interface String {
-    get available(): boolean;
-    get status(): Color;
+    get available(): boolean
+    get status(): Color
   }
 }
 
 Object.defineProperties(String.prototype, {
   available: {
-    get: function () {
+    get: function() {
       try {
         return !!execSync(`curl -I http://${this}`);
       } catch {
@@ -24,7 +24,7 @@ Object.defineProperties(String.prototype, {
   },
 
   status: {
-    get: function () {
+    get: function() {
       return this.available ? Color.Green : Color.Red;
     },
   },
@@ -52,7 +52,7 @@ export class HttpService extends Service {
   }
 
   static fetch() {
-    new Bonjour().find({ type: "http" }, (service: Service) => {
+    new Bonjour().find({ type: 'http' }, (service: Service) => {
       this.services = Object.values({
         ...(this.services ?? []).reduce((result, service) => {
           return {
@@ -69,5 +69,5 @@ export class HttpService extends Service {
     });
   }
 
-  origin: string = "";
+  origin: string = '';
 }
